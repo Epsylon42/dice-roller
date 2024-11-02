@@ -1,0 +1,59 @@
+From 08323aa5b2285c1ed31641ad216aa88c5df796e5 Mon Sep 17 00:00:00 2001
+From: Epsylon <eepsylon.3@gmail.com>
+Date: Sat, 2 Nov 2024 21:20:16 +0200
+Subject: [PATCH] Flip text output
+
+---
+ Adafruit_GFX.cpp | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/Adafruit_GFX.cpp b/Adafruit_GFX.cpp
+index af98900..4c265be 100644
+--- a/Adafruit_GFX.cpp
++++ b/Adafruit_GFX.cpp
+@@ -1152,9 +1152,9 @@ void Adafruit_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
+       for (int8_t j = 0; j < 8; j++, line >>= 1) {
+         if (line & 1) {
+           if (size_x == 1 && size_y == 1)
+-            writePixel(x + i, y + j, color);
++            writePixel(x + 6 - i, y + 8 - j, color);
+           else
+-            writeFillRect(x + i * size_x, y + j * size_y, size_x, size_y,
++            writeFillRect(x + 6 * size_x - i * size_x, y + 8 * size_y - j * size_y, size_x, size_y,
+                           color);
+         } else if (bg != color) {
+           if (size_x == 1 && size_y == 1)
+@@ -1244,15 +1244,15 @@ size_t Adafruit_GFX::write(uint8_t c) {
+ 
+     if (c == '\n') {              // Newline?
+       cursor_x = 0;               // Reset x to zero,
+-      cursor_y += textsize_y * 8; // advance y one line
++      cursor_y -= textsize_y * 8; // advance y one line
+     } else if (c != '\r') {       // Ignore carriage returns
+-      if (wrap && ((cursor_x + textsize_x * 6) > _width)) { // Off right?
+-        cursor_x = 0;                                       // Reset x to zero,
+-        cursor_y += textsize_y * 8; // advance y one line
+-      }
++      //if (wrap && ((cursor_x + textsize_x * 6) > _width)) { // Off right?
++        //cursor_x = _width - 1 - 6 * textsize_x;                                       // Reset x to zero,
++        //cursor_y -= textsize_y * 8; // advance y one line
++      //}
+       drawChar(cursor_x, cursor_y, c, textcolor, textbgcolor, textsize_x,
+                textsize_y);
+-      cursor_x += textsize_x * 6; // Advance x one char
++      cursor_x -= textsize_x * 6; // Advance x one char
+     }
+ 
+   } else { // Custom font
+@@ -1277,7 +1277,7 @@ size_t Adafruit_GFX::write(uint8_t c) {
+           drawChar(cursor_x, cursor_y, c, textcolor, textbgcolor, textsize_x,
+                    textsize_y);
+         }
+-        cursor_x +=
++        cursor_x -=
+             (uint8_t)pgm_read_byte(&glyph->xAdvance) * (int16_t)textsize_x;
+       }
+     }
+-- 
+2.47.0
+

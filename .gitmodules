@@ -1,0 +1,9 @@
+[submodule "firmware/lib/Adafruit-GFX-Library"]
+	path = firmware/lib/Adafruit-GFX-Library
+	url = https://github.com/adafruit/Adafruit-GFX-Library
+[submodule "firmware/lib/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino"]
+	path = firmware/lib/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino
+	url = https://github.com/adafruit/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino
+[submodule "firmware/lib/ESP8266TrueRandom"]
+	path = firmware/lib/ESP8266TrueRandom
+	url = https://github.com/marvinroger/ESP8266TrueRandom
