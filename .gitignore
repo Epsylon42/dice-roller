@@ -1,0 +1,7 @@
+firmware/.pio
+firmware/.cache
+firmware/.clangd
+dice-roller-pcb/fab
+dice-roller-pcb/dice-roller-pcb-backups
+case/*.FCBak
+case/export
