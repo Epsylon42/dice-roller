@@ -154,6 +154,8 @@ void flushHistory() {
 }
 
 CheckRollsResult check_rolls() {
+    auto const c_d100_delay = 2s;
+
     auto const held_for = g_dice_buttons.since_last_update();
 
     g_mode_button.update();
@@ -173,19 +175,16 @@ CheckRollsResult check_rolls() {
             g_display_device.setCursor(g_display_device.width() - 1 - 12 * 2, g_display_device.height() / 2 - 11);
             g_display_device.print(dice.name.data());
             return CheckRollsResult::Processing;
-        } else if (dice.size == 10 && g_dice_buttons.is_pressed(dice.button) && g_dice_buttons.just_held_for(2s)) {
+        } else if (dice.size == 10 && g_dice_buttons.is_pressed(dice.button) && g_dice_buttons.just_held_for(c_d100_delay)) {
             clearScreen();
             g_display_device.setCursor(g_display_device.width() - 1 - 12 * 2, g_display_device.height() / 2 - 11);
             g_display_device.print(DICE_D100.name.data());
             return CheckRollsResult::Processing;
         } else if (g_dice_buttons.is_just_released(dice.button)) {
             uint32_t value;
-            if (dice.size == 10 && held_for >= 2s) {
-                value = DICE_D100.roll();
-            } else {
-                value = dice.roll();
-            }
-            updHistory(&dice, value);
+            bool const is_d100 = dice.size == 10 && held_for >= c_d100_delay;
+            value = is_d100 ? DICE_D100.roll() : dice.roll();
+            updHistory(is_d100 ? &DICE_D100 : &dice, value);
             std::array<char, 32> value_buf;
             snprintf(value_buf.data(), value_buf.size(), "%" PRIu32, value);
 
