@@ -22,7 +22,8 @@ The firmware supports either version, selected via platformio environments
 
 Firmware is flashed via the UART header. To enable esp8266 flashing mode - hold the 0 button when booting
 
-## Screenshots
+## Pictures
 
+![image](./pictures/photo.jpg)
 ![image](./pictures/pcb.png)
 ![image](./pictures/case.png)
